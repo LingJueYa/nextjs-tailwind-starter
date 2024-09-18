@@ -1,0 +1,49 @@
+{
+  "compilerOptions": {
+    // 增量编译，提高编译速度
+    "incremental": true,
+    "tsBuildInfoFile": "./buildFile",
+    // 目标 ECMAScript 版本，与 Astro 默认设置保持一致
+    "target": "ESNext",
+    // 包含的库文件，确保支持最新的 ECMAScript 特性和 DOM API
+    "lib": ["ESNext", "DOM", "DOM.Iterable"],
+    "jsx": "react-jsx",
+    "module": "esnext",
+    "strict": true,
+    // 允许导入 JSON 模块
+    "resolveJsonModule": true,
+    // 允许默认导入
+    "esModuleInterop": true,
+    // 跳过库文件检查
+    "skipLibCheck": true,
+    // 强制文件名大小写一致
+    "forceConsistentCasingInFileNames": true,
+    "moduleResolution": "node",
+    // 确保每个文件都是一个模块
+    "isolatedModules": true,
+    // 不输出文件（由 Astro 处理）
+    "noEmit": true,
+    // 允许使用未声明的变量
+    "allowJs": true,
+    // 不允许隐式的 any 类型
+    "noImplicitAny": true,
+    // 严格的空值检查
+    "strictNullChecks": true,
+    // 不允许未使用的局部变量
+    "noUnusedLocals": true,
+    // 不允许未使用的参数
+    "noUnusedParameters": true,
+    // 确保 switch 语句中的 case 都有 break
+    "noFallthroughCasesInSwitch": true,
+    // 允许导入 .astro 文件
+    "allowImportingTsExtensions": true,
+    // 基础路径设置，方便导入模块
+    "baseUrl": ".",
+    // 路径别名，方便导入
+    "paths": {
+      "@/*": ["src/*"]
+    }
+  },
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "exclude": ["node_modules"]
+}
