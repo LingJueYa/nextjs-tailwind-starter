@@ -1,21 +1,21 @@
 // global.d.ts
-declare module "*.svg" {
+declare module '*.svg' {
   const value: string;
   export default value;
 }
-declare module "*.webp" {
+declare module '*.webp' {
   const value: string;
   export default value;
 }
-declare module "*.avif" {
+declare module '*.avif' {
   const value: string;
   export default value;
 }
-declare module "*.md" {
+declare module '*.md' {
   const value: string;
   export default value;
 }
-declare module "*.json" {
+declare module '*.json' {
   const value: unknown;
   export default value;
 }

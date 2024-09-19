@@ -5,7 +5,7 @@
   "trailingComma": "all",
   "printWidth": 100,
   "arrowParens": "avoid",
-  "semi": false,
+  "semi": true,
   "bracketSpacing": true,
   "overrides": [
     {

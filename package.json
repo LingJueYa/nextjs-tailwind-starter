@@ -7,13 +7,14 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "lint:fix": "next lint --fix",
-    "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\"",
+    "format": "prettier --write .",
+    "lint-fix": "eslint --fix --ext .js,.jsx,.ts,.tsx .",
     "type-check": "tsc --noEmit",
-    "prepare": "husky install"
+    "pre-commit": "pnpm run format && pnpm run lint-fix && pnpm run type-check && pnpm build"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",
+    "axios": "^1.7.7",
     "clsx": "^2.1.1",
     "framer-motion": "^11.5.4",
     "idb": "^8.0.0",
@@ -36,30 +37,20 @@
     "autoprefixer": "^10.0.1",
     "eslint": "^8",
     "eslint-config-next": "14.2.12",
-    "eslint-config-prettier": "^9.0.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-import": "^2.30.0",
+    "eslint-plugin-jsx-a11y": "^6.10.0",
+    "eslint-plugin-prettier": "^5.2.1",
+    "eslint-plugin-react": "^7.36.1",
+    "eslint-plugin-react-hooks": "^4.6.2",
     "husky": "^9.1.6",
-    "lint-staged": "^15.2.10",
     "postcss": "^8",
     "prettier": "^3.3.3",
     "tailwindcss": "^3.4.1",
-    "typescript": "^5"
+    "typescript": "^5.3.3"
   },
   "engines": {
     "node": ">=18.0.0"
   },
-  "packageManager": "pnpm@9.10.0",
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
-  "lint-staged": {
-    "*.{js,jsx,ts,tsx}": [
-      "eslint --fix",
-      "prettier --write"
-    ],
-    "*.{json,md}": [
-      "prettier --write"
-    ]
-  }
+  "packageManager": "pnpm@9.10.0"
 }

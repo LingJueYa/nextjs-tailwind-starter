@@ -1,7 +1,7 @@
 // axios 封装
 // - 如果需要携带 token：请求中加入 { requiresAuth: true }
 
-import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
+import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 
 interface PendingTask {
   config: AxiosRequestConfig;
@@ -13,7 +13,7 @@ interface PendingTask {
 // 单例模式 Axios 实例
 class AxiosSingleton {
   private static instance: AxiosInstance | null = null;
-  private static twoInstance: AxiosInstance | null = null;
+  // private static twoInstance: AxiosInstance | null = null;
   // 刷新 Token 状态
   private static refreshing = false;
   // 重试次数
@@ -37,7 +37,7 @@ class AxiosSingleton {
   public static getInstance(config?: AxiosRequestConfig): AxiosInstance {
     if (!AxiosSingleton.instance) {
       const baseURL = AxiosSingleton.getBaseURL(
-        process.env.BASE_API_URL || "http://localhost:8080/api/v1"
+        process.env.BASE_API_URL || 'http://localhost:8080/api/v1',
       );
       AxiosSingleton.instance = AxiosSingleton.createInstance(baseURL, config);
     }
@@ -59,10 +59,7 @@ class AxiosSingleton {
   // }
 
   // 创建 Axios 实例
-  private static createInstance(
-    baseURL: string,
-    config?: AxiosRequestConfig
-  ): AxiosInstance {
+  private static createInstance(baseURL: string, config?: AxiosRequestConfig): AxiosInstance {
     const instance = axios.create({
       baseURL,
       timeout: 10000,
@@ -72,27 +69,26 @@ class AxiosSingleton {
 
     // 请求拦截器
     instance.interceptors.request.use(
-      (config) => {
-        const jwtName = process.env.JWT_NAME || "jwt";
+      config => {
+        const jwtName = process.env.JWT_NAME || 'jwt';
         const accessToken = localStorage.getItem(jwtName);
         // 默认情况下，假设不需要身份验证
-        const requiresAuth =
-          config.requiresAuth !== undefined ? config.requiresAuth : false;
+        const requiresAuth = config.requiresAuth !== undefined ? config.requiresAuth : false;
         // 只有在需要身份验证的情况下才添加 Authorization 头
         if (requiresAuth && accessToken) {
-          config.headers["Authorization"] = `Bearer ${accessToken}`;
+          config.headers['Authorization'] = `Bearer ${accessToken}`;
         }
         return config;
       },
-      (error) => {
-        console.error("请求错误(请求拦截器)", error);
+      error => {
+        console.error('请求错误(请求拦截器)', error);
         return Promise.reject(error);
-      }
+      },
     );
 
     // 响应拦截器
     instance.interceptors.response.use(
-      (response) => {
+      response => {
         const { code, data, message } = response.data;
         // 处理成功响应
         if (code === 200) return data;
@@ -101,13 +97,13 @@ class AxiosSingleton {
           return AxiosSingleton.handle401(response);
         }
         // 处理其他错误
-        console.error("响应错误", message);
+        console.error('响应错误', message);
         return Promise.reject(new Error(message));
       },
-      (error) => {
-        console.error("响应错误", error);
+      error => {
+        console.error('响应错误', error);
         return Promise.reject(error);
-      }
+      },
     );
 
     return instance;
@@ -133,8 +129,8 @@ class AxiosSingleton {
         AxiosSingleton.retryCount = 0; // 重置重试计数
 
         // 处理队列中的请求
-        AxiosSingleton.queue.forEach((task) =>
-          task.resolve(AxiosSingleton.instance!.request(task.config))
+        AxiosSingleton.queue.forEach(task =>
+          task.resolve(AxiosSingleton.instance!.request(task.config)),
         );
         AxiosSingleton.queue = [];
 
@@ -142,11 +138,11 @@ class AxiosSingleton {
         return AxiosSingleton.instance!.request(originalRequest);
       } catch (error) {
         // 刷新失败，清空队列并重定向
-        AxiosSingleton.queue.forEach((task) => task.reject(error));
+        AxiosSingleton.queue.forEach(task => task.reject(error));
         AxiosSingleton.queue = [];
         // 清空 localStorage
         localStorage.clear();
-        window.location.href = "/login";
+        window.location.href = '/login';
         return Promise.reject(error);
       } finally {
         AxiosSingleton.refreshing = false; // 刷新完成
@@ -155,24 +151,24 @@ class AxiosSingleton {
 
     // 重试次数达到上限，重定向用户
     localStorage.clear();
-    window.location.href = "/login";
-    console.error("用户身份过期，请重新登录");
-    return Promise.reject(new Error("用户身份过期，请重新登录"));
+    window.location.href = '/login';
+    console.error('用户身份过期，请重新登录');
+    return Promise.reject(new Error('用户身份过期，请重新登录'));
   }
 
   // 刷新 Token
   private static async refreshToken() {
     try {
-      const response = await AxiosSingleton.instance!.get("/user/refresh", {
-        params: { token: localStorage.getItem("refreshToken") },
+      const response = await AxiosSingleton.instance!.get('/user/refresh', {
+        params: { token: localStorage.getItem('refreshToken') },
       });
-      localStorage.setItem("accessToken", response.data.accessToken);
-      localStorage.setItem("refreshToken", response.data.refreshToken);
+      localStorage.setItem('accessToken', response.data.accessToken);
+      localStorage.setItem('refreshToken', response.data.refreshToken);
       return response;
     } catch (error) {
-      console.error("刷新 token 失败", error);
+      console.error('刷新 token 失败', error);
       localStorage.clear();
-      window.location.href = "/login";
+      window.location.href = '/login';
       return Promise.reject(error);
     }
   }

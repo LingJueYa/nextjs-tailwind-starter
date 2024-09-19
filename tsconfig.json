@@ -7,7 +7,7 @@
     "target": "ESNext",
     // 包含的库文件，确保支持最新的 ECMAScript 特性和 DOM API
     "lib": ["ESNext", "DOM", "DOM.Iterable"],
-    "jsx": "react-jsx",
+    "jsx": "preserve",
     "module": "esnext",
     "strict": true,
     // 允许导入 JSON 模块

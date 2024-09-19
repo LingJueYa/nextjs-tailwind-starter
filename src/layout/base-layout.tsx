@@ -1,6 +1,6 @@
 // 基础 LayOut 组件
 
-import React from "react";
+import React from 'react';
 // import Header from "@/components/header";
 
 const BaseLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {

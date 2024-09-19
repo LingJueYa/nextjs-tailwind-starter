@@ -1,18 +1,18 @@
 export const siteInfo = {
   // 站点标题
-  title: "",
+  title: '',
   // 站点描述
-  description: "",
+  description: '',
   // 关键字
-  keywords: "",
+  keywords: '',
   // 作者
-  author: "",
+  author: '',
   // 作者邮箱
-  email: "",
+  email: '',
   // 项目网站
-  url: "",
+  url: '',
   // logo
-  logo: "",
+  logo: '',
   // 项目 icon 图标
-  icon: "",
+  icon: '',
 };
